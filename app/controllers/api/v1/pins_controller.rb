@@ -3,7 +3,11 @@ class Api::V1::PinsController < ApplicationController
   before_action :validate_user_and_token
 
   def index
-    render json: Pin.all.order('created_at DESC')
+    if @valid_keys
+      render json: Pin.all.order('created_at DESC')
+    else
+      head 401
+    end
   end
 
   def create
